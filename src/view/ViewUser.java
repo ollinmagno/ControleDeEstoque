@@ -5,6 +5,7 @@
  */
 package view;
 
+import controller.ControllerUser;
 import model.User;
 
 /**
@@ -12,8 +13,8 @@ import model.User;
  * @author Ollin
  */
 public class ViewUser extends javax.swing.JFrame {
-
     User user = new User();
+    ControllerUser controllerUser = new ControllerUser();
     
     public ViewUser() {
         initComponents();
@@ -182,7 +183,7 @@ public class ViewUser extends javax.swing.JFrame {
         user.setName(jTextField2.getText());
         user.setLogin(jTextField3.getText());
         user.setPassword(String.valueOf(jPasswordField1.getPassword()));
-        
+        controllerUser.saveUserController(user);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
