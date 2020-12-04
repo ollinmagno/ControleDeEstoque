@@ -26,6 +26,7 @@ public class DAOUser extends ConnectionSQLite {
             preparedStatement.setString(2, user.getPassword());
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
         
         return true;
