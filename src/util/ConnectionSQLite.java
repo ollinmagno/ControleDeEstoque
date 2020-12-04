@@ -6,14 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConnectionSQLite {
+abstract public class ConnectionSQLite {
 
     private Connection connection;
     
     public boolean connect() {
 
         try {
-            String url = "jdbc:sqlite:db/dbestoque.db";
+            String url = "jdbc:sqlite:database/db_stock.db";
 
             this.connection = DriverManager.getConnection(url);
             System.out.println("Conectado");
