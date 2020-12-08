@@ -44,7 +44,11 @@ public class DAOUser extends ConnectionSQLite {
         ResultSet resultSet = null;
         PreparedStatement preparedStatement = null;
         
-        String sql = "";
+        String sql = "SELECT pk_user_id,"
+                + "user_name,"
+                + "user_login,"
+                + "user_password "
+                + " FROM tbl_user";
         
         try {
             preparedStatement = createPreparedStatement(sql);
@@ -61,6 +65,6 @@ public class DAOUser extends ConnectionSQLite {
             System.out.println(e);
         }
         disconnect();
-        return null;
+        return listUsers;
     }
 }   
