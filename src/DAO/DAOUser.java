@@ -1,8 +1,11 @@
 package DAO;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.User;
@@ -23,12 +26,41 @@ public class DAOUser extends ConnectionSQLite {
         try {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLogin());
-            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.executeUpdate();
+            
         } catch (SQLException ex) {
             Logger.getLogger(DAOUser.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-        
+        disconnect();
         return true;
+    }
+    public List<User> getUserList(){
+        List<User> listUsers = new ArrayList();
+        User user = new User();
+        connect();
+        
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        
+        String sql = "";
+        
+        try {
+            preparedStatement = createPreparedStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                user = new User();
+                user.setId(resultSet.getInt(1));
+                user.setName(resultSet.getString(2));
+                user.setLogin(resultSet.getString(3));
+                user.setPassword(resultSet.getString(4));
+                listUsers.add(user);
+            }
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        disconnect();
+        return null;
     }
 }   
