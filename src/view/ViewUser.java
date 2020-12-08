@@ -6,7 +6,10 @@
 package view;
 
 import controller.ControllerUser;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.User;
 
 /**
@@ -16,10 +19,12 @@ import model.User;
 public class ViewUser extends javax.swing.JFrame {
     User user = new User();
     ControllerUser controllerUser = new ControllerUser();
+    List<User> listUsers = new ArrayList();
     
     public ViewUser() {
         initComponents();
         setLocationRelativeTo(null);
+        loadUsers();
     }
 
     /**
@@ -40,7 +45,7 @@ public class ViewUser extends javax.swing.JFrame {
         jtfLogin = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        users_table = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -82,7 +87,7 @@ public class ViewUser extends javax.swing.JFrame {
 
         jLabel4.setText("Senha");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        users_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -101,7 +106,7 @@ public class ViewUser extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(users_table);
 
         jButton4.setText("Alterar");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -205,6 +210,7 @@ public class ViewUser extends javax.swing.JFrame {
         if(controllerUser.saveUserController(user)){
             JOptionPane.showMessageDialog(this, "Usuário cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
             clearForm();
+            loadUsers();
         }else {
             JOptionPane.showMessageDialog(this, "Erro ao cadastrar usuário", "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -242,6 +248,21 @@ public class ViewUser extends javax.swing.JFrame {
         jtfName.setText("");
         jtfLogin.setText("");
         jtfPassword.setText("");
+    }
+    
+    private void loadUsers(){
+        listUsers = controllerUser.getListUsersController();
+        System.out.println(listUsers);
+        DefaultTableModel model = (DefaultTableModel) users_table.getModel();
+        model.setNumRows(0);
+        
+        for(int i=0; i < listUsers.size(); i++){
+            model.addRow(new Object[]{
+                listUsers.get(i).getId(),
+                listUsers.get(i).getName(),
+                listUsers.get(i).getLogin()
+            });
+        }
     }
     
     public static void main(String args[]) {
@@ -289,10 +310,10 @@ public class ViewUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jtfCodigo;
     private javax.swing.JTextField jtfLogin;
     private javax.swing.JTextField jtfName;
     private javax.swing.JPasswordField jtfPassword;
+    private javax.swing.JTable users_table;
     // End of variables declaration//GEN-END:variables
 }
