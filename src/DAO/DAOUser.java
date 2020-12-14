@@ -71,7 +71,7 @@ public class DAOUser extends ConnectionSQLite {
 
     public boolean deleteUser(int code) {
         PreparedStatement preparedStatement;
-        String sql = "DELETE FROM tbL_user WHERE pk_user_id = '" + code + "'";
+        String sql = "DELETE FROM tbl_user WHERE pk_user_id = '" + code + "'";
         preparedStatement = this.createPreparedStatement(sql);
 
         try {
