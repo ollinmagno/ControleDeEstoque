@@ -19,9 +19,11 @@ import model.User;
 public class ViewUser extends javax.swing.JFrame {
     User user = new User();
     ControllerUser controllerUser = new ControllerUser();
-    List<User> listUsers = new ArrayList();
+    List<User> listUsers;
+    private DefaultTableModel model;
     
     public ViewUser() {
+        this.listUsers = new ArrayList();
         initComponents();
         setLocationRelativeTo(null);
         loadUsers();
@@ -221,7 +223,7 @@ public class ViewUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        clearForm();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jtfNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfNameActionPerformed
@@ -252,12 +254,11 @@ public class ViewUser extends javax.swing.JFrame {
     
     private void loadUsers(){
         listUsers = controllerUser.getListUsersController();
-        System.out.println(listUsers);
-        DefaultTableModel model = (DefaultTableModel) users_table.getModel();
-        model.setNumRows(0);
+        this.model = (DefaultTableModel) users_table.getModel();
+        this.model.setNumRows(0);
         
         for(int i=0; i < listUsers.size(); i++){
-            model.addRow(new Object[]{
+            this.model.addRow(new Object[]{
                 listUsers.get(i).getId(),
                 listUsers.get(i).getName(),
                 listUsers.get(i).getLogin()
